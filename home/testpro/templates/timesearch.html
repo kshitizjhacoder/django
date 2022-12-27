@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     html, body {
+        margin:16px 16px 8px;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+      background: rgb(244, 223, 246);
+      }
+        input[type=text], input[type=password] {
+      width: 10%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid rgb(227, 202, 202);
+      box-sizing: border-box;}
+      .search{
+        width: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+      button {
+      background-color: #7ea642;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grabbing;
+      width: 100%;}
+      button:hover {
+      opacity: 0.8;
+      }
+    </style>
+</head>
+<body>
+    <h1 style="color: rgb(202, 152, 152);">Welcome to our authetication page or home page</h1>
+    <br/>
+    {% if messages %}
+        {% for message in messages %}
+            {{ message }}
+        {% endfor %}
+    {%endif%}
+    <br/>
+    <br/>
+    {% if tt %}
+    <table>
+      <thead>
+      <tr><th>Train available is :</th>
+        <th>number of the coaches : </th>
+        <th>name of the train : </th>
+            <!-- <br/>{{forged}} -->
+          <th>the source is : </th>
+          <th> the destination is :</th>
+          <th>depature date : </th>
+          <th>depature time : </th><th>arrival time :</th><th>arrival date :</th>
+        </tr>
+        </thead>
+        <br/>
+        <br/>
+
+        {% for t in tt %}
+        <tbody>
+          <tr><td>{{t.PNR}}</td>
+          <td>{{t.no_of_coach}} </td>
+          <td>{{t.name_of_train}}</td>
+              <!-- <br/>{{forged}} -->
+            <td>{{t.Source}}</td>
+            <td> {{t.Destination}}</td>
+            <td> {{t.dept_date}}</td>
+            <td> {{t.dept_time}}</td>
+            <td> {{t.arriv_time}}</td>
+            <td> {{t.arriv_date}}</td>
+            
+          </tr>
+          </tbody>
+        {% endfor %}
+    </table>
+    {% else %}
+    <br/>
+    <div class="formclass">
+        <form action="{% url 'timesearch' %}" method="POST">
+        {% csrf_token %}
+            <label for="uname"><strong>Enter the your potential search</strong></label><br>
+            <input type="text" placeholder="source" name="src"><br>
+            <input type="text" placeholder="destination" name="dest"><br>
+            <div class="search"><button type="submit" onclick=""> Search</button></div>    </form>
+    </div>
+    {% endif %}
+</body>
+</html>

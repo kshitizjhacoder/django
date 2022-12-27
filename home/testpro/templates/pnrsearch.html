@@ -1,0 +1,81 @@
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     html, body {
+        margin:16px 16px 8px;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+      background: rgb(244, 223, 246);
+      }
+        input[type=text], input[type=password] {
+      width: 10%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid rgb(227, 202, 202);
+      box-sizing: border-box;}
+      .search{
+        width: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+      button {
+      background-color: #7ea642;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grabbing;
+      width: 100%;}
+      button:hover {
+      opacity: 0.8;
+      }
+    </style>
+</head>
+<body></body>
+    <h1 style="color: rgb(202, 152, 152);">Welcome to our authetication page or home page</h1>
+    <br/>
+      <table>
+      {% if searched %}
+      <tr><th>YOU SEARCHED THE PNR NUMBER :</th>
+        <th>number of the coaches : </th>
+        <th>name of the train : </th>
+          <th>the source is : </th>
+          <th> the destination is :</th>
+          <th>the times pnr_no is :</th></tr>
+          <br/>
+          <br/>
+          <br/>
+
+          <tr><td>{{searched}}</td>
+          <td>{{t_coach}} </td>
+          <td>{{t_name}}</td>
+            <td>{{t_src}}</td>
+            <td> {{t_dest}}</td>
+            <td>{{t_pn}}</td></tr>
+    </table>
+    {% else %}
+    <br/>
+    <br/>
+    <br/>
+    <div class="formclass">
+        <form action="{% url 'pnrsearch' %}" method="POST">
+        {% csrf_token %}
+            <label for="uname"><strong>Enter the PNR number of train</strong></label><br>
+            <input type="text" placeholder="PNR_NO" name="pnr_no"><br>
+            <input type="text" placeholder="class_id" name="classs_id"><br>
+
+            <div class="search"><button type="submit" onclick=""> Search</button></div>    </form>
+    </div>
+    {% endif %}
+</body>
+</html>
+{% endblock %}

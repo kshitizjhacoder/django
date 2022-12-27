@@ -1,0 +1,18 @@
+
+{% block content %}
+    <center>
+        {% if searched %}
+            <h1>YOU SEARCHED THE PNR NUMBER : {{searched}}</h1>
+            <h1>number of the coaches : {{t_coach}} 
+                <br/>name of the train : {{t_name}}
+                <!-- <br/>{{forged}} -->
+                <br/>the source is : {{t_src}}
+                <br/>the destination is : {{t_dest}}
+                <br/>the times pnr_no is : {{t_pn}}
+            </h1>
+        
+        {% else %}
+            <h1>Hey!  you forgot to search</h1>
+        {% endif %}
+    </center>
+{% endblock %}

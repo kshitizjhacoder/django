@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+     html, body {
+        margin:16px 16px 8px;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 15px;
+      background: rgb(244, 223, 246);
+      }
+        input[type=text], input[type=password] {
+      width: 10%;
+      padding: 16px 8px;
+      margin: 8px 0;
+      display: inline-block;
+      border: 1px solid rgb(227, 202, 202);
+      box-sizing: border-box;}
+      .search{
+        width: 20vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+      }
+      .extras{
+        width: 50vh;
+        padding: 16px 16px 16px 16px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: aliceblue;
+      }
+      .extra{
+        width: 80%;
+        padding: 16px 16px 16px 16px;
+        display: flex;
+        justify-content: space-around;
+        align-items: stretch;
+        background-color: aliceblue;
+      }
+      button {
+      background-color: #7ea642;
+      color: white;
+      padding: 14px 0;
+      margin: 10px 0;
+      border: none;
+      cursor: grabbing;
+      height: 10%;
+      width: 20%;}
+      button:hover {
+      opacity: 0.8;
+      }
+    </style>
+</head>
+<body>
+  {% if messages %}
+  {% for message in messages %}
+      {{ message }}
+  {% endfor %}
+{%endif%}
+    <div class="extra">
+      <h3>For searching the PNR number : </h3><br>
+    <button type="submit" onclick=""><a href="/pnrsearch" style="color: aliceblue;"><strong> Search</strong></a></button>
+    <br/>
+    <br/>
+    <h3>Searching through the timing : </h3><br>\
+    <button type="submit" onclick=""><a href="/timesearch" style="color: aliceblue;"><strong> Search</strong></a></button>
+
+    </div>
+    <br>
+    <br>
+    <div class="extras">
+    <button type="submit" onclick=""><a href="/signup" style="color: aliceblue;"><strong> signup</strong></a></button>
+    <button type="submit" onclick=""><a href="" style="color: aliceblue;"><strong> signout</strong></a></button>
+    <button type="submit" onclick=""><a href="/signin" style="color: aliceblue;"><strong> signin</  strong></a></button>
+    </div>
+</body>
+</html>
