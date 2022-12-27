@@ -7,7 +7,8 @@
     <title>Document</title>
     <style>
      html, body {
-        margin:16px 16px 8px;
+      padding: 0;
+      margin : 0;
       font-family: Roboto, Arial, sans-serif;
       font-size: 15px;
       background: rgb(244, 223, 246);
@@ -26,6 +27,22 @@
         align-items: center;
 
       }
+      table{
+        padding: 0;
+        margin: 0;
+        width: 100%;
+      }
+      thead{
+        height: 10vh;
+        font-weight: 700;
+        font-family: cursive;
+      }
+      tr{
+        margin-left: 5px;
+        width: 100%;
+        height: 5vh;
+        font-weight: 700;
+      }
       button {
       background-color: #7ea642;
       color: white;
@@ -40,7 +57,7 @@
     </style>
 </head>
 <body>
-    <h1 style="color: rgb(202, 152, 152);">Welcome to our authetication page or home page</h1>
+    <h1 style="color: rgb(202, 152, 152);"><center>Train table is been displayed below select any one for booking</center></h1>
     <br/>
     {% if messages %}
         {% for message in messages %}
@@ -52,22 +69,20 @@
     {% if tt %}
     <table>
       <thead>
-      <tr><th>Train available is :</th>
-        <th>number of the coaches : </th>
-        <th>name of the train : </th>
+      <tr><th>Train number :</th>
+        <th>Coaches : </th>
+        <th>Train name : </th>
             <!-- <br/>{{forged}} -->
-          <th>the source is : </th>
-          <th> the destination is :</th>
-          <th>depature date : </th>
-          <th>depature time : </th><th>arrival time :</th><th>arrival date :</th>
+          <th>Source:</th>
+          <th>Destination:</th>
+          <th>depature_date:</th>
+          <th>depature_time:</th><th>arrival_time:</th><th>arrival_date:</th>
         </tr>
         </thead>
-        <br/>
-        <br/>
 
         {% for t in tt %}
         <tbody>
-          <tr><td>{{t.PNR}}</td>
+          <tr data-href="details"><td>{{t.PNR}}</td>
           <td>{{t.no_of_coach}} </td>
           <td>{{t.name_of_train}}</td>
               <!-- <br/>{{forged}} -->
@@ -93,5 +108,15 @@
             <div class="search"><button type="submit" onclick=""> Search</button></div>    </form>
     </div>
     {% endif %}
+    <script>
+      document.addEventListener("DOMContentLoaded",()=>{
+        const rows = document.querySelectorAll("tr[data-href]");
+        rows.forEach(row=>{
+          row.addEventListener("click",()=>{
+            window.location.href = row.dataset.href;
+          });
+        });
+      });
+    </script>
 </body>
 </html>
