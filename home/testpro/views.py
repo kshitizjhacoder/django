@@ -16,7 +16,7 @@ from django.core.mail import EmailMessage
 # Create your views here.
 
 
-def details(request):
+def details(request, id):
     if request.method == 'POST':
         searched = (request.POST['pnr_no'])
         id = request.POST['classs_id']
