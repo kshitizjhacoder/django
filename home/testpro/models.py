@@ -43,24 +43,23 @@ class Train(models.Model):
         return self.PNR
 
 
-class Seat_id(models.Model):
-    seat_no = models.CharField(max_length=10)
+class Cld(models.Model):
+    id = models.IntegerField(default=0, primary_key=True)
+    amt = models.IntegerField(default=0)
+    class_at = models.CharField(max_length=20)
+    seat_no = models.CharField(max_length=5, default=None)
+    aval = models.CharField(max_length=10, default='TRUE')
     train = models.ForeignKey(Train, on_delete=models.CASCADE)
 
 
 class Reservation(models.Model):
-    tno = models.ForeignKey('Train', on_delete=models.CASCADE)
-    personal = models.ForeignKey('Personal', on_delete=models.CASCADE)
-    nos = models.ForeignKey(Seat_id, on_delete=models.CASCADE)
-    amt = models.IntegerField()
-    cls = models.CharField(max_length=50)
-    status = models.CharField(max_length=50)
+    seat_no = models.CharField(max_length=5, default=None)
 
 
 class Payment(models.Model):
     tno = models.ForeignKey('Train', on_delete=models.CASCADE)
     personal = models.ForeignKey('Personal', on_delete=models.CASCADE)
-    nos = models.ForeignKey(Seat_id, on_delete=models.CASCADE)
+    cld = models.ForeignKey('Cld', on_delete=models.CASCADE, default=None)
     pnr = models.CharField(max_length=50)
-    reservation = models.ForeignKey(Reservation, on_delete=models.CASCADE)
+    amt = models.IntegerField(default=0)
     cancel = models.CharField(max_length=50)

@@ -1,10 +1,11 @@
 from django.contrib import admin
-from .models import Personal, Station, Train, Seat_id, Reservation, Payment
+from .models import Personal, Station, Train, Reservation, Payment, Cld
 
 # Register your models here.
 admin.site.register(Personal)
 admin.site.register(Station)
 admin.site.register(Train)
-admin.site.register(Seat_id)
+admin.site.register(Cld)
+
 admin.site.register(Reservation)
 admin.site.register(Payment)

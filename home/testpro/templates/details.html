@@ -1,18 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Document</title>
+      
+    <style>
+        table {
+      padding: 0;
+      margin: 0;
+      width: 100%;
+    }
 
-{% block content %}
-    <center>
-        {% if searched %}
-            <h1>YOU SEARCHED THE PNR NUMBER : {{searched}}</h1>
-            <h1>number of the coaches : {{t_coach}} 
-                <br/>name of the train : {{t_name}}
-                <!-- <br/>{{forged}} -->
-                <br/>the source is : {{t_src}}
-                <br/>the destination is : {{t_dest}}
-                <br/>the times pnr_no is : {{t_pn}}
-            </h1>
-        
+    thead {
+      height: 10vh;
+      font-weight: 700;
+      font-family: cursive;
+    }
+
+    tr {
+      margin-left: 5px;
+      width: 100%;
+      height: 5vh;
+      font-weight: 700;
+    }
+
+    </style>
+</head>
+<body>
+    {% block content %}
+        {% if id %}
+        <table>
+          <thead>
+            
+            <tr>
+              <th><center>Train number :</center></th>
+              <th><center>class name : </center></th>
+              <th><center>Amount to pay:</center></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-bs-toggle="modal" data-bs-target="#GeneralModal">
+              <td><center>{{id}}</center></td>
+              <!-- <td name = "cid"><center>{{t.id}}/</center></td> -->
+
+              <td><center>{{class_at_g}}</center></td>
+              <td><center>{{t_c_g_amt}}</center></td>
+            </tr>
+            <tr data-bs-toggle="modal" data-bs-target="#SleeperModal">
+              <td><center>{{id}}</center></td>
+              <td><center>{{class_at_s}}</center></td>
+              <td><center>{{t_c_s_amt}}</center></td>
+         </tr>
+         <tr data-bs-toggle="modal" data-bs-target="#ACModal">
+           <td><center>{{id}}</center></td>
+           <td><center>{{class_at_a}}</center></td>
+           <td><center>{{t_c_a_amt}}</center></td>
+      </tr>
+          </tbody>
+          
+        </table>
         {% else %}
             <h1>Hey!  you forgot to search</h1>
-        {% endif %}
-    </center>
+        {% endif %}     
 {% endblock %}
+<script>document.addEventListener("DOMContentLoaded", () => {
+    const rows = document.querySelectorAll("tr[data-href]");
+    rows.forEach(row => {
+    row.addEventListener("click", () => {
+      window.location.href = row.dataset.href;
+    });
+  });
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
+<div class="modal fade" id="GeneralModal" tabindex="-1" aria-labelledby="GeneralModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="GeneralModalLabel">Seats Available</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'reservation' %}" method="POST">
+        {% csrf_token %}
+      <div class="modal-body">
+        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name = "sn" multiple>
+          {% for ts in t_cld_general %}
+          <option value = "{{ts.seat_no}}">{{ts.seat_no}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="submit1" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+      
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="SleeperModal" tabindex="-1" aria-labelledby="SleeperModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="SleeperModalLabel">Seats Available</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'reservation' %}" method="POST">
+        {% csrf_token %}
+      <div class="modal-body">
+        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name = "sn" multiple>
+          {% for ts in t_cld_sleeper %}
+          <option value = "{{ts.seat_no}}">{{ts.seat_no}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="submit1" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+<div class="modal fade" id="ACModal" tabindex="-1" aria-labelledby="ACModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="ACModalLabel">Seats Available</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <form action="{% url 'reservation' %}" method="POST">
+        {% csrf_token %}
+      <div class="modal-body">
+        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name = "sn" multiple>
+        
+          {% for ts in t_cld_ac %}
+          <option value = "{{ts.seat_no}}">{{ts.seat_no}}</option>
+          {% endfor %}
+       </select>
+      </div>
+      
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="submit" name="submit1" class="btn btn-primary">Save changes</button>
+      </div>
+    </div></form>
+  </div>
+</div>
+</body>
+</html>

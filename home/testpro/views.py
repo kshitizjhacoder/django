@@ -1,6 +1,6 @@
 
 from .forms import PersonalFrom
-from .models import Personal, Train
+from .models import Personal, Train, Cld, Reservation
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.contrib import messages
@@ -17,33 +17,40 @@ from django.core.mail import EmailMessage
 
 
 def details(request, id):
-    if request.method == 'POST':
-        searched = (request.POST['pnr_no'])
-        id = request.POST['classs_id']
-        # src = request.POST['src']
-        # dest = request.POST['dest']
-        # dat = request.POST['dat']
-        # forged = f'Train object({searched})'
-        # train object has been searched
-        t_name = Train.objects.filter(PNR__contains=searched)
-        # t_times = Times.objects.filter(Source__contains=id)
+    t_name = Train.objects.filter(PNR=id)
+    t_cld = Cld.objects.filter(train=id)
+    t_cld_general = Cld.objects.filter(train=id, class_at="GENERAL CLASS")
+    t_cld_sleeper = Cld.objects.filter(train=id, class_at="SLEEPER CLASS")
+    t_cld_ac = Cld.objects.filter(train=id, class_at="AC CLASS")
+    for t_c_g in t_cld_general:
+        t_c_g_amt = t_c_g.amt
+    for t_c_s in t_cld_sleeper:
+        t_c_s_amt = t_c_s.amt
+    for t_c_a in t_cld_ac:
+        t_c_a_amt = t_c_a.amt
 
-        # related train and there timing will be searched
+    return render(request, 'details.html', {'id': id, 't_cld_general': t_cld_general,
+                                            't_cld_sleeper': t_cld_sleeper, 't_cld_ac': t_cld_ac,
+                                            'class_at_g': 'GENERAL CLASS', 'class_at_s': 'SLEEPER CLASS', 'class_at_a': 'AC CLASS',
+                                            't_c_g_amt': t_c_g_amt, 't_c_s_amt': t_c_s_amt, 't_c_a_amt': t_c_a_amt})
 
-        # t_times = Times.objects.filter(class_id__contains=id)
-        # t_pn = Times.PNR_NO
-        # for t in t_name:
-        #     tn = t.name_of_train
-        #     tc = t.no_of_coach
-        # for t in t_times:
-        #     # if t.PNR_NO == searched:
-        #     t_pn = t.PNR_NO
-        #     ts = t.Source
-        #     td = t.Destination
-        # fog = Times.objects.filter(t_pn__contains=searched)
-        return render(request, 'details.html', {})
-    else:
-        return render(request, 'details.html', {})
+
+def reservation(request):
+    if request.method == 'POST' and 'submit1' in request.POST:
+        sn = request.POST.getlist('sn')
+        t_cld = Cld.objects.filter(seat_no=sn[0])
+        l = len(sn)
+        for t in t_cld:
+            amt = t.amt*l
+        return render(request, 'reservation.html', {'t_cld': t_cld, 'length_selected': l, 'sn': sn, 'amt': amt})
+    elif request.method == 'POST' and 'submit2' in request.POST:
+        em = request.POST.get('email')
+        pw = request.POST.get('password')
+        t_pers = Personal.objects.filter(email=em, password=pw)
+        if not t_pers:
+            return render(request, 'signup.html')
+        print(t_pers)
+        return render(request, 'reservation.html', {'book': True})
 
 
 def activateEmail(request, user, to_email):

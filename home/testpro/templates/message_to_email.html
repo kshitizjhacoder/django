@@ -1,7 +1,9 @@
 {% autoescape off %}
-
+{% if name %}
 Hi {{ name }}
 
 please click on the link in the description below to register sucessfully: 
-
+{% else %}
+your tickets have been confirmed thank you
+{% endif %}
 {% endautoescape %}
