@@ -6,73 +6,38 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
   <style>
-    html,
-    body {
-      padding: 0;
-      margin: 0;
+    html, body {
+        margin:16px 16px 8px;
       font-family: Roboto, Arial, sans-serif;
       font-size: 15px;
-      background: rgb(244, 223, 246);
-    }
-
-    input[type=text],
-    input[type=password] {
-      width: 10%;
+      background: #eceff1;
+      color: rgb(98, 119, 226);
+      }
+      input[type=text], input[type=password] {
+      width: 60%;
       padding: 16px 8px;
-      margin: 8px 0;
       display: inline-block;
       border: 1px solid rgb(227, 202, 202);
       box-sizing: border-box;
     }
-
-    .search {
-      width: 20vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
+    input:hover{
+      border: 2px solid rgb(94, 94, 240);
+      cursor:text;
     }
-
-    table {
-      padding: 0;
-      margin: 0;
-      width: 100%;
-    }
-
-    thead {
-      height: 10vh;
-      font-weight: 700;
-      font-family: cursive;
-    }
-
-    tr {
-      margin-left: 5px;
-      width: 100%;
-      height: 5vh;
-      font-weight: 700;
-    }
-
-    button {
-      background-color: #7ea642;
-      color: white;
-      padding: 14px 0;
-      margin: 10px 0;
-      border: none;
-      cursor: grabbing;
-      width: 100%;
-    }
-
-    button:hover {
-      opacity: 0.8;
+    h2{
+      font-size: 2.5rem;
+      font-weight: 900;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     }
   </style>
 </head>
 
 <body>
-  <h1 style="color: rgb(202, 152, 152);">
+  <h2>
     <center>Train table is been displayed below select any one for booking</center>
-  </h1>
+  </h2>
   <br />
   {% if messages %}
   {% for message in messages %}
@@ -82,7 +47,7 @@
   <br />
   <br />
   {% if tt %}
-  <table>
+  <table class="table table-success table-hover table-borderless">
     <thead>
       <tr>
         <th>Train number :</th>
@@ -138,6 +103,8 @@
       });
     });
   </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
 </body>
 
 </html>

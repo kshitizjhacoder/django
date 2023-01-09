@@ -4,9 +4,13 @@
     <title>Account registration form</title>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
     <style>
       html, body {
       min-height: 100%;
+      background: #eceff1;
+
       }
       body, div, form, input, select, p { 
       padding: 0;
@@ -14,7 +18,7 @@
       outline: none;
       font-family: Roboto, Arial, sans-serif;
       font-size: 18px;
-      color: #666;
+      color:rgb(98, 119, 226);
       }
       h1 {
       margin: 0;
@@ -22,13 +26,12 @@
       }
       h3 {
       margin: 12px 0;
-      color: #51d542;
+      color: rgb(98, 119, 226);
       }
       .main-block {
       display: flex;
       justify-content: center;
       align-items: center;
-      background: #fff;
       }
       form {
       width: 100%;
@@ -60,15 +63,16 @@
       padding: 5px;
       vertical-align: middle;
       }
+      input:hover{
+        border: 2px solid rgb(94, 94, 240);
+      cursor:text;
+      }
       .checkbox {
       margin-bottom: 10px;
       }
       select, .children, .gender, .bdate-block {
       width: calc(100% + 26px);
       padding: 5px 0;
-      }
-      select {
-      background: transparent;
       }
       .gender input {
       width: auto;
@@ -96,10 +100,10 @@
       margin: -2px 10px 0 0;
       }
       .checkbox a {
-      color: #8ebf42;
+      color: rgb(98, 119, 226);
       }
       .checkbox a:hover {
-      color: #82b534;
+      color: rgb(98, 119, 226);
       }
       button {
       width: 100%;
@@ -107,13 +111,10 @@
       margin: 10px auto;
       border-radius: 5px; 
       border: none;
-      background: #8ebf42; 
+      background: rgb(98, 119, 226); 
       font-size: 18px;
       font-weight: 600;
       color: #fff;
-      }
-      button:hover {
-      background: #82b534;
       }
       @media (min-width: 568px) {
       .account-details >div, .personal-details >div {
@@ -129,13 +130,19 @@
       width: calc(60% + 16px);
       }
       }
+      h2{
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: rgb(98, 119, 226);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
     </style>
   </head>
   <body>
     <div class="main-block">
     <form action="{% url 'signup' %}" method="POST">
       {% csrf_token %}
-      <h1>Create a free account</h1>
+      <h2>Create a free account</h2>
       <fieldset>
         <legend>
           <h3>Account Details</h3>
@@ -156,29 +163,20 @@
             <div><label>Phone*</label><input type="text" name="phone" required></div>
             <div><label>Street*</label><input type="text" name="street" required></div>
             <div><label>City*</label><input type="text" name="city" required></div>
-            <div>
-              <label>Country*</label>  
-              <select>
-                <option value=""></option>
-                <option value="INDIA">INDIA</option>
-                <option value="Russia">Russia</option>
-                <option value="Germany">Germany</option>
-                <option value="France">France</option>
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-              </select>
-            </div>
+            
           </div>
           <div>
             <div>
               <label>Gender*</label>
-              <div class="gender">
-                <input type="radio" value="male" id="male" name="sex" required/>
-                <label for="male" class="radio">Male</label>
-                <input type="radio" value="female" id="female" name="sex" required/>
-                <label for="female" class="radio">Female</label>
-                <input type="radio" value="others" id="others" name="sex" required/>
-                <label for="others" class="radio">others</label>
+              <div class="btn-group" role="group" aria-label="Basic radio toggle button group">
+                <input type="radio" class="btn-check" name="sex" value="male" id="btnradio1" autocomplete="off" checked>
+                <label class="btn btn-outline-primary" for="btnradio1">MALE</label>
+              
+                <input type="radio" class="btn-check" name="sex" value="female" id="btnradio2" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio2">FEMALE</label>
+              
+                <input type="radio" class="btn-check" name="sex" value="others" id="btnradio3" autocomplete="off">
+                <label class="btn btn-outline-primary" for="btnradio3">OTHERS</label>
               </div>
             </div>
             <div class="birthdate" name="date">
@@ -239,20 +237,10 @@
           </div>
         </div>
       </fieldset>
-      <fieldset>
-        <legend>
-          <h3>Terms and Mailing</h3>
-        </legend>
-        <div  class="terms-mailing">
-          <div class="checkbox">
-            <input type="checkbox" name="checkbox"><span>I accept the <a href="https://www.w3docs.com/privacy-policy">Privacy Policy for W3Docs.</a></span>
-          </div>
-          <div class="checkbox">
-            <input type="checkbox" name="checkbox"><span>I want to recelve personallzed offers by your site</span>
-          </div>
-      </fieldset>
-      <button type="submit" href="/">Submit</button>
+      <button class="btn btn-primary" type="submit" href="/">Submit</button>
     </form>
     </div> 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+
   </body>
 </html>

@@ -76,6 +76,7 @@ def home(request):
 def signup(request):
     if request.method == "POST":
         form = PersonalFrom(request.POST or None)
+        print(form)
         if form.is_valid():
             user = form.save(commit=False)
             user.is_activate = False
@@ -86,7 +87,8 @@ def signup(request):
             messages.success(
                 request, f'NEW ACCOUNT CREATED WE HAVE SEND THE MAIL FOR CONFIRMATION THANK YOU : {name} and your mail is {email}')
             activateEmail(request, user, email)
-            return redirect('home')
+            return render(request, 'index.html')
+
     else:
         return render(request, 'signup.html', {})
 
@@ -121,7 +123,6 @@ def signout(request):
 def pnrsearch(request):
     if request.method == 'POST':
         searched = (request.POST['pnr_no'])
-        id = request.POST['classs_id']
         t_name = Train.objects.filter(PNR__contains=searched)
     #     t_times = Times.objects.filter(PNR_NO__contains=searched)
         for t in t_name:
@@ -131,7 +132,7 @@ def pnrsearch(request):
             ts = t.Source
             td = t.Destination
         return render(request, 'pnrsearch.html', {'searched': searched,
-                                                  't_name': tn, 't_coach': tc, 't_pn': t_pn, 't_src': ts, 't_dest': td})
+                                                  't_name': t_name})
     else:
         return render(request, 'pnrsearch.html', {})
 
