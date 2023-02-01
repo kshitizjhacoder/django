@@ -53,6 +53,9 @@ class Cld(models.Model):
 
 
 class Reservation(models.Model):
+    id = models.AutoField(primary_key=True)
+    email = models.EmailField(max_length=25)
+    password = models.CharField(max_length=10)
     seat_no = models.CharField(max_length=5, default=None)
 
 

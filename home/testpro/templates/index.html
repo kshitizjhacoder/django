@@ -81,23 +81,20 @@
   <header>
     <h2>BOOK YOUR TICKET</h2>
     <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signupModal"><a href="/signup"><strong style="color: rgb(231, 124, 124); text-decoration: none;">signup</strong></a></button>
+    <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signupModal"><a href="/cancel"><strong style="color: rgb(231, 124, 124); text-decoration: none;">cancel</strong></a></button>
 
   </header>
-  {% if messages %}
-  {% for message in messages %}
-      {{ message }}
-  {% endfor %}
-{%endif%}
+  
 <div class="search-card">
 <h3 style="margin-top: 24px;">Search using</h3>
-<button class="btn btn-secondary" onclick="trainnumber()" style="margin-right: 16px;">Train Number</button>
+<button class="btn btn-secondary" onclick="trainnumber()" style="margin-right: 16px;">Train Name</button>
 <button class="btn btn-secondary" onclick="traintiming()" style="margin-left: 16px;">Source And Destination</button>
 <div class = "overall">
 <div id="train-number" style="width: 100%;">
 <form action="{% url 'pnrsearch' %}" method="POST">
   {% csrf_token %}
       <div class="input-group mb-3" style="width: 45%;">
-        <input type="text" class="form-control"  aria-label="Recipient's username" placeholder="Enter the train number to search" name="pnr_no"  aria-describedby="button-addon2">
+        <input type="text" class="form-control"  aria-label="Recipient's username" placeholder="Enter the train name to search" name="pnr_no"  aria-describedby="button-addon2">
       </div>   
       <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
 </form>
@@ -118,6 +115,13 @@
   </div>
 </div>
 </div>
+<h3>
+  {% if messages %}
+  {% for message in messages %}
+      {{ message }}
+  {% endfor %}
+{%endif%}
+</h3>
     <br>
   <div class="specials-card">
   <center> <h3><strong> Specials on Indian Railway</strong> </h3></center>

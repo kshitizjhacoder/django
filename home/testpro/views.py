@@ -16,6 +16,9 @@ from django.core.mail import EmailMessage
 # Create your views here.
 
 
+sn = []
+
+
 def details(request, id):
     t_name = Train.objects.filter(PNR=id)
     t_cld = Cld.objects.filter(train=id)
@@ -37,7 +40,9 @@ def details(request, id):
 
 def reservation(request):
     if request.method == 'POST' and 'submit1' in request.POST:
+        global sn
         sn = request.POST.getlist('sn')
+        print(sn)
         t_cld = Cld.objects.filter(seat_no=sn[0])
         l = len(sn)
         for t in t_cld:
@@ -50,6 +55,13 @@ def reservation(request):
         if not t_pers:
             return render(request, 'signup.html')
         print(t_pers)
+        print(sn)
+        for s in sn:
+            post = Reservation()
+            post.email = em
+            post.password = pw
+            post.seat_no = s
+            post.save()
         return render(request, 'reservation.html', {'book': True})
 
 
@@ -67,6 +79,27 @@ def activateEmail(request, user, to_email):
         messages.success(request, 'the mail has been sent')
     else:
         messages.error(request, 'please check your data')
+
+
+def cancel(request, id=0):
+    if request.method == 'POST':
+        em = request.POST.get('email')
+        pw = request.POST.get('password')
+        t_pers = Personal.objects.filter(email=em, password=pw)
+        for t in t_pers:
+            name = t.name
+        t_res = Reservation.objects.filter(email=em, password=pw)
+        if t_pers:
+            return render(request, 'cancel.html', {'name': name, 't_res': t_res, 'cancel': True})
+
+    return render(request, 'cancel.html', {})
+
+
+def cancel_this(request, id):
+    t_res = Reservation.objects.filter(id=id)
+    t_res.delete()
+    messages.success(request, 'you have just delete an seat')
+    return render(request, 'cancel.html', {})
 
 
 def home(request):
@@ -123,7 +156,7 @@ def signout(request):
 def pnrsearch(request):
     if request.method == 'POST':
         searched = (request.POST['pnr_no'])
-        t_name = Train.objects.filter(PNR__contains=searched)
+        t_name = Train.objects.filter(name_of_train=searched)
     #     t_times = Times.objects.filter(PNR_NO__contains=searched)
         for t in t_name:
             tn = t.name_of_train
