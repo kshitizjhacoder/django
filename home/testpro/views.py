@@ -62,6 +62,10 @@ def reservation(request):
             post.password = pw
             post.seat_no = s
             post.save()
+        emum = EmailMessage(
+            "Your Confirmation", "Thank you for choosing us. Your Ticket have been confirmed. if you wish to see go to the cancel page", to={em})
+        if emum.send():
+            messages.success(request, 'Enjoy our ride')
         return render(request, 'reservation.html', {'book': True})
 
 
@@ -98,8 +102,8 @@ def cancel(request, id=0):
 def cancel_this(request, id):
     t_res = Reservation.objects.filter(id=id)
     t_res.delete()
-    messages.success(request, 'you have just delete an seat')
-    return render(request, 'cancel.html', {})
+    messages.success(request, 'you have just deleted an seat')
+    return redirect('home')
 
 
 def home(request):
