@@ -1,4 +1,5 @@
 
+from django.db import connection
 from .forms import PersonalFrom
 from .models import Personal, Train, Cld, Reservation
 from django.shortcuts import render, redirect
@@ -85,6 +86,15 @@ def activateEmail(request, user, to_email):
         messages.error(request, 'please check your data')
 
 
+def my_custom_sql(self):
+    with connection.cursor() as cursor:
+        cursor.execute("UPDATE bar SET foo = 1 WHERE baz = %s", [self.baz])
+        cursor.execute("SELECT foo FROM bar WHERE baz = %s", [self.baz])
+        row = cursor.fetchone()
+
+    return row
+
+
 def cancel(request, id=0):
     if request.method == 'POST':
         em = request.POST.get('email')
@@ -101,8 +111,17 @@ def cancel(request, id=0):
 
 def cancel_this(request, id):
     t_res = Reservation.objects.filter(id=id)
+    for t in t_res:
+        st = t.seat_no
+        if '2s' in st:
+            amt = 300
+        if 'sl' in st:
+            amt = 600
+        if 'ac' in st:
+            amt = 900
     t_res.delete()
-    messages.success(request, 'you have just deleted an seat')
+    messages.success(
+        request, f'you have just deleted an seat {st} and the amount {amt} will be refunded on your account')
     return redirect('home')
 
 
